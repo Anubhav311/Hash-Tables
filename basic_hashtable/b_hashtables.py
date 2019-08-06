@@ -37,7 +37,17 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
+    i = hash(key, hash_table.capacity)
+    pair = Pair(key, value)
+
+    if hash_table.storage[i] != None:
+        #bucket not empty
+        if hash_table.storage[i].key != key:
+            #print wanring
+            print(f"Yo, dawg. There's already something written at address: {hash_table.storage[i]} It's  {value}")
+    
+    #add the pair to hash_table
+    hash_table.storage[i] = pair
 
 
 # '''
