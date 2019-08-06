@@ -1,4 +1,17 @@
 
+class Node:
+    def __init__(self, value=None, next_node=None):
+        self.value = value
+        self.next_node = next_node
+
+    def get_value(self):
+        return self.value
+
+    def get_next(self):
+        return self.next_node
+
+    def set_next(self, new_next):
+        self.next_node = new_next
 
 # '''
 # Basic hash table key/value pair
@@ -39,15 +52,32 @@ def hash(string, max):
 def hash_table_insert(hash_table, key, value):
     i = hash(key, hash_table.capacity)
     pair = Pair(key, value)
+    node = Node(pair, None)
+    run = True
+    current = hash_table.storage[i]
+    if current != None:
+        while run:
+            if current.value.key == key:
+                current.value.value = value
+                run = False
+            elif current.next_node == None:
+                current.next_node = pair
+                run = False
+            else:
+                current = current.next_node
+    else:
+        hash_table.storage[i] = pair
 
-    if hash_table.storage[i] != None:
-        #bucket not empty
-        if hash_table.storage[i].key != key:
-            #print wanring
-            print(f"Yo, dawg. There's already something written at address: {hash_table.storage[i]} It's  {value}")
-    
-    #add the pair to hash_table
-    hash_table.storage[i] = pair
+    #     #bucket not empty
+    #     current = hash_table.storage[i]
+    #     while current.value.key != key:
+    #     # if hash_table.storage[i].value.key != key:
+
+    #         #print wanring
+    #         print(f"Yo, dawg. There's already something written at address: {hash_table.storage[i]} It's  {value}")
+    # else:
+    #     #add the pair to hash_table
+    #     hash_table.storage[i] = pair
 
 
 # '''
