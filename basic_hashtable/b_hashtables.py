@@ -1,4 +1,17 @@
 
+class Node:
+    def __init__(self, value=None, next_node=None):
+        self.value = value
+        self.next_node = next_node
+
+    def get_value(self):
+        return self.value
+
+    def get_next(self):
+        return self.next_node
+
+    def set_next(self, new_next):
+        self.next_node = new_next
 
 # '''
 # Basic hash table key/value pair
@@ -15,7 +28,8 @@ class Pair:
 # '''
 class BasicHashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 
 # '''
@@ -23,7 +37,11 @@ class BasicHashTable:
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
-    pass
+    hash = 5381
+    for s in string:
+        hash = ((hash << 5) + hash) + ord(s)
+
+    return hash % max
 
 
 # '''
@@ -32,7 +50,34 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
+    i = hash(key, hash_table.capacity)
+    pair = Pair(key, value)
+    node = Node(pair, None)
+    run = True
+    current = hash_table.storage[i]
+    if current != None:
+        while run:
+            if current.value.key == key:
+                current.value.value = value
+                run = False
+            elif current.next_node == None:
+                current.next_node = pair
+                run = False
+            else:
+                current = current.next_node
+    else:
+        hash_table.storage[i] = pair
+
+    #     #bucket not empty
+    #     current = hash_table.storage[i]
+    #     while current.value.key != key:
+    #     # if hash_table.storage[i].value.key != key:
+
+    #         #print wanring
+    #         print(f"Yo, dawg. There's already something written at address: {hash_table.storage[i]} It's  {value}")
+    # else:
+    #     #add the pair to hash_table
+    #     hash_table.storage[i] = pair
 
 
 # '''
@@ -41,7 +86,12 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity)
+
+    if hash_table.storage[index] is None:
+        print('warning')
+    else:
+        hash_table.storage[index] = None
 
 
 # '''
@@ -50,7 +100,15 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity)
+
+    if hash_table.storage[index] is None:
+        return None
+    if hash_table.storage[index] is not None and hash_table.storage[index].key != key:
+        return None
+    else:
+        return hash_table.storage[index].value
+
 
 
 def Testing():

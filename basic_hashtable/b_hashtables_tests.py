@@ -1,9 +1,9 @@
 import unittest
 
 from b_hashtables import (BasicHashTable,
-                          hash_table_insert,
-                          hash_table_remove,
-                          hash_table_retrieve)
+                            hash_table_insert,
+                            hash_table_remove,
+                            hash_table_retrieve)
 
 
 class TestBasicHashTable(unittest.TestCase):
